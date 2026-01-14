@@ -34,10 +34,13 @@ export default function Home() {
 
     try {
       const formData = new FormData(e.currentTarget);
-      const res = await fetch("/api/image-analyze", {
-        method: "POST",
-        body: formData,
-      });
+      const res = await fetch(
+  "https://web-production-ff11c.up.railway.app/predict",
+  {
+    method: "POST",
+    body: formData,
+  }
+);
 
       const text = await res.text();
       if (!text) throw new Error("Empty response");
