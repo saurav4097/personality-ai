@@ -46,7 +46,11 @@ export default function Home() {
       if (!text) throw new Error("Empty response");
 
       const data = JSON.parse(text);
-
+if (!res.ok) {
+        alert(data.error || "Analysis failed");
+        setLoading(false);
+        return;
+      }
       const formattedScores: TraitScores = {};
       for (const key in data.scores) {
         formattedScores[key] = Math.round(data.scores[key]);
@@ -96,7 +100,7 @@ export default function Home() {
             Choose Image
             <input
               type="file"
-              name="image"
+              name="file" // ✅ Must match FastAPI 'file'
               accept="image/*"
               required
               onChange={handleImageChange}
