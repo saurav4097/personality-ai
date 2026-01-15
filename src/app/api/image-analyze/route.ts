@@ -15,7 +15,7 @@ export async function POST(req: Request) {
     const mlForm = new FormData();
     mlForm.append("file", file);
 
-    const res = await fetch("https://web-production-ff11c.up.railway.app/predict", {
+    const res = await fetch("http://localhost:8000/predict", {
       method: "POST",
       body: mlForm,
       cache: "no-store",

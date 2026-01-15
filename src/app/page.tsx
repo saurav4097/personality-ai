@@ -34,23 +34,16 @@ export default function Home() {
 
     try {
       const formData = new FormData(e.currentTarget);
-      const res = await fetch(
-  "https://web-production-ff11c.up.railway.app/predict",
-  {
-    method: "POST",
-    body: formData,
-  }
-);
+      const res = await fetch("/api/image-analyze", {
+        method: "POST",
+        body: formData,
+      });
 
       const text = await res.text();
       if (!text) throw new Error("Empty response");
 
       const data = JSON.parse(text);
-if (!res.ok) {
-        alert(data.error || "Analysis failed");
-        setLoading(false);
-        return;
-      }
+
       const formattedScores: TraitScores = {};
       for (const key in data.scores) {
         formattedScores[key] = Math.round(data.scores[key]);
@@ -100,7 +93,7 @@ if (!res.ok) {
             Choose Image
             <input
               type="file"
-              name="file" // ✅ Must match FastAPI 'file'
+              name="image"
               accept="image/*"
               required
               onChange={handleImageChange}
